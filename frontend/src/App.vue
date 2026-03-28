@@ -1,11 +1,7 @@
 <template>
   <div id="app" class="app-wrapper">
     <!-- Barra de Busca com Header -->
-    <SearchBar
-      :loading="loading"
-      :error="error"
-      @search="analisar"
-    />
+    <SearchBar :loading="loading" :error="error" @search="analisar" />
 
     <!-- Seção de Análise -->
     <div v-if="analysis || loading" class="analysis-section">
@@ -16,18 +12,15 @@
 
       <div v-if="analysis && !loading" class="analysis-content">
         <!-- Card de Viabilidade -->
-        <ViabilityCard
-          :score="analysis.viablityScore"
-          :recommendation="analysis.recommendation"
-          :competitors="analysis.competitorsAnalyzed"
-          :rating="analysis.avgRating"
-          :insight="analysis.insights"
-        />
+        <ViabilityCard :score="analysis.viablityScore" :recommendation="analysis.recommendation"
+          :competitors="analysis.competitorsAnalyzed" :rating="analysis.avgRating" :insight="analysis.insights" />
 
         <!-- Desafios e Oportunidades -->
         <div class="analysis-columns">
-          <ChallengesSection v-if="analysis.challenges && analysis.challenges.length" :challenges="analysis.challenges" />
-          <OpportunitiesSection v-if="analysis.opportunities && analysis.opportunities.length" :opportunities="analysis.opportunities" />
+          <ChallengesSection v-if="analysis.challenges && analysis.challenges.length"
+            :challenges="analysis.challenges" />
+          <OpportunitiesSection v-if="analysis.opportunities && analysis.opportunities.length"
+            :opportunities="analysis.opportunities" />
         </div>
 
         <!-- Próximos Passos -->
@@ -57,6 +50,7 @@ import NextStepsSection from './components/NextStepsSection.vue';
 import CompetitorsList from './components/CompetitorsList.vue';
 import EmptyState from './components/EmptyState.vue';
 import Footer from './components/Footer.vue';
+import { LEADS_URL } from './config.js';
 
 export default {
   name: 'App',
@@ -92,7 +86,7 @@ export default {
 
       try {
         const response = await fetch(
-          `/leads?keyword=${encodeURIComponent(keyword)}&city=${encodeURIComponent(city)}`
+          `${LEADS_URL}?keyword=${encodeURIComponent(keyword)}&city=${encodeURIComponent(city)}`
         );
 
         if (!response.ok) {
