@@ -2,8 +2,9 @@
 // 🤖 LLM ANALYZER COM NVIDIA API
 // =============================
 
-// URLs possíveis (testar qual funcionará)
-const NVIDIA_API_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
+// URL da API NVIDIA (lida do .env)
+const NVIDIA_API_URL = process.env.NVIDIA_API_URL || 'https://integrate.api.nvidia.com/v1/chat/completions';
+const NVIDIA_MODEL = process.env.NVIDIA_MODEL || 'mistralai/mistral-7b-instruct-v0.2';
 
 // Função para analisar viabilidade de negócio com LLM
 export async function analyzeBusinessViability(keyword, city, competitors) {
@@ -48,7 +49,7 @@ Quantidade média de reviews: ${Math.round(competitors.reduce((acc, c) => acc + 
 Forneça uma análise detalhada sobre a viabilidade desse negócio nesse mercado específico.`;
 
         const requestBody = {
-            model: 'mistralai/mistral-7b-instruct-v0.2',
+            model: NVIDIA_MODEL,
             messages: [
                 {
                     role: 'system',

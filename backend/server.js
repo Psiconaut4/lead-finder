@@ -9,9 +9,15 @@ import leadRoutes from './routes/leads.js';
 
 const app = express();
 
-// CORS mais permissivo em desenvolvimento
+// 🔐 CORS - Configurado por variáveis de ambiente
+const corsOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
+  : ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'];
+
+console.log(`🔒 CORS Origins Permitidas:`, corsOrigins);
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
+  origin: corsOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -24,6 +30,11 @@ app.use('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
 
-app.listen(3000, () => {
-  console.log('API rodando em http://localhost:3000');
+// ⚙️ Configurações do servidor
+const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || 'localhost';
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+app.listen(PORT, HOST, () => {
+  console.log(`\n✅ API ${NODE_ENV.toUpperCase()} rodando em http://${HOST}:${PORT}\n`);
 });

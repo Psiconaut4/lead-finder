@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/leads': {
-        target: 'http://localhost:3000',
+        // URL do backend (desenvolvimento: http://localhost:3000)
+        target: process.env.VITE_API_URL || 'http://localhost:3000',
         changeOrigin: true
       }
     }
