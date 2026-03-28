@@ -31,12 +31,15 @@ export async function extractCompetitors(page, elements, maxItems, city) {
         }
       } catch {}
 
+      let mapsUrl = page.url();
+
       results.push({
         name,
         rating: extractRating(text),
         reviews: extractReviews(text),
         address: `${city}, Brasil`,
         website,
+        mapsUrl: page.url(),
         source: 'google-maps-real'
       });
 

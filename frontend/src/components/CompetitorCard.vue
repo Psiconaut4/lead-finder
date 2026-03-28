@@ -27,8 +27,9 @@
       </div>
 
       <div class="badges-row">
-        <span v-if="competitor.hasWebsite" class="badge badge-website">
-          <span>🌐</span> Com Site
+        <span v-if="competitor.website" class="badge badge-website">
+          <a :href="competitor.website" target="_blank"><span>🌐</span> Com Site</a>
+
         </span>
         <span v-else class="badge badge-no-website">
           <span>❌</span> Sem Site
@@ -37,7 +38,7 @@
     </div>
 
     <div v-if="competitor.mapsUrl" class="card-footer">
-      <a :href="competitor.mapsUrl" target="_blank" rel="noopener" class="maps-button">
+      <a v-if="competitor.mapsUrl" :href="competitor.mapsUrl" target="_blank" class="maps-button">
         <span class="button-icon">🗺️</span>
         <span class="button-text">Ver no Google Maps</span>
         <span class="button-arrow">→</span>
@@ -98,6 +99,7 @@ export default {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -218,6 +220,12 @@ export default {
 .badge-website {
   background: #d1fae5;
   color: #065f46;
+}
+
+.badge-website>a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 700;
 }
 
 .badge-no-website {
